@@ -1,0 +1,33 @@
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>reCaptcha</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/start.css') }}">
+  </head>
+  <body>
+    <div class="object">
+      <h1>Нейронная сеть</h1>
+      <p class="itask-url">
+        <a href="load">>> Индивидуальное задание</a>
+      </p>
+      <div class=container>
+        <form method="POST" enctype="multipart/form-data">
+          {{ form.csrf_token }}
+          <h2>{{ form.upload_first.label }}</h2>
+          <p>{{ form.upload_first }}</p>
+          <div class="captcha">
+            {{ form.recaptcha }}
+          </div>
+          <input type="submit" value="Predict!">
+        </form>
+      </div>
+      <div class="neural-img-container">
+        {% if img %}
+          <h2>Результат</h2>
+          <img src="{{ img }}" alt="">
+          <p class="prediction">Нейронная сеть говорит,<br> что это {{ neur }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
