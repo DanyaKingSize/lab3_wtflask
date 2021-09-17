@@ -1,0 +1,73 @@
+<!doctype html>
+<head>
+  <title>Resize</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/form.css') }}">
+</head>
+<body>
+  <h1>Склеивание изображений</h1>
+  <div class="form">
+    <p class="upload_title">Форма загрузки</p>
+    <form action="" method=post enctype=multipart/form-data>
+      {{ form.csrf_token }}
+      <div class="form-flex">
+        <div class="fields-form">
+          <div class="upload-file">
+            {{ form.upload_file1.label }}
+            {{ form.upload_file1 }}
+            {{ form.upload_file2.label }}
+            {{ form.upload_file2 }}
+          </div>
+          <br>
+          <div class="select-class">
+            {{ form.selector.label }}
+            {{ form.selector }}
+          </div>
+        </div>
+        <div class="upload">
+          <input type=submit value="Изменить размер!" class="upload-input">
+        </div>
+      </div>
+    </form>
+    {% if compiled %}
+    <div class="img-tabled">
+      <table>
+        <tr>
+          <td colspan="2">{{ img_1 }}</td>
+          {% if form.selector.data == '2' %}
+          <td colspan="2">{{ compiled }}</td>
+          {% else %}
+          <td colspan="2">{{ img_2 }}</td>
+          {% endif %}
+        </tr>
+        <tr>
+          <td><img src="{{ img_1 }}" alt="{{ img_1 }}"></td>
+          <td><img src="{{ graphs[0] }}" alt="{{ graphs[0] }}"></td>
+          {% if form.selector.data == '2' %}
+          <td rowspan="3"><img src="{{ compiled }}" alt="{{ compiled }}"></td>
+          <td rowspan="3"><img src="{{ graphs[2] }}" alt="{{ graphs[2] }}"></td>
+          {% else %}
+          <td><img src="{{ img_2 }}" alt="{{ img_2 }}"></td>
+          <td><img src="{{ graphs[1] }}" alt="{{ graphs[1] }}"></td>
+          {% endif %}
+        </tr>
+        <tr>
+          {% if form.selector.data == '2' %}
+          <td colspan="2">{{ img_2 }}</td>
+          {% else %}
+          <td colspan="4">{{ compiled }}</td>
+          {% endif %}
+        </tr>
+        <tr>
+          {% if form.selector.data == '2' %}
+          <td><img src="{{ img_2 }}" alt="{{ img_2 }}"></td>
+          <td><img src="{{ graphs[1] }}" alt="{{ graphs[1] }}"></td>
+          {% else %}
+          <td colspan="2"><img src="{{ compiled }}" alt="{{ compiled }}"></td>
+          <td colspan="2"><img src="{{ graphs[2] }}" alt="{{ graphs[2] }}"></td>
+          {% endif %}
+        </tr>
+      </table>
+    </div>
+    {% endif %}
+  </div>
+</body>
